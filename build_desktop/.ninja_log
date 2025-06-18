@@ -1,4 +1,4 @@
 # ninja log v6
-17	253	7719898003526472	CMakeFiles/app.dir/src/ecs/draggable_rect.cpp.obj	ed0e614d4a2da22
-14	1156	7719898003496464	CMakeFiles/app.dir/src/main.cpp.obj	14e98f170444f506
-1157	1269	7719898014926891	D:/Projects/CPP/ProtoApp/bin_desktop/app.exe	f0cc23d02478113f
+17	238	7719909732294397	CMakeFiles/app.dir/src/ecs/draggable_rect.cpp.obj	ed0e614d4a2da22
+14	1102	7719909732264381	CMakeFiles/app.dir/src/main.cpp.obj	14e98f170444f506
+1103	1207	7719909743155714	D:/Projects/CPP/ProtoApp/bin/app.exe	7f4a4dee7d0f2853

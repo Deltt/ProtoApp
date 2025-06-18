@@ -64,16 +64,16 @@ build CMakeFiles/index.dir/src/ecs/draggable_rect.cpp.o: CXX_COMPILER__index_uns
 
 
 #############################################
-# Link the executable D:\Projects\CPP\ProtoApp\bin_web\index.html
+# Link the executable D:\Projects\CPP\ProtoApp\docs\index.html
 
-build D$:/Projects/CPP/ProtoApp/bin_web/index.html: CXX_EXECUTABLE_LINKER__index_ CMakeFiles/index.dir/src/main.cpp.o CMakeFiles/index.dir/src/ecs/draggable_rect.cpp.o
+build D$:/Projects/CPP/ProtoApp/docs/index.html: CXX_EXECUTABLE_LINKER__index_ CMakeFiles/index.dir/src/main.cpp.o CMakeFiles/index.dir/src/ecs/draggable_rect.cpp.o
   LINK_FLAGS = -s USE_GLFW=3 -s ASYNCIFY --shell-file D:/Projects/CPP/ProtoApp/emscripten_html_template/centered.html
   LINK_LIBRARIES = -lraylib
   LINK_PATH = -LD:/Projects/CPP/ProtoApp/libs/raylib/lib_web
   OBJECT_DIR = CMakeFiles\index.dir
   POST_BUILD = cd .
   PRE_LINK = cd .
-  TARGET_FILE = D:\Projects\CPP\ProtoApp\bin_web\index.html
+  TARGET_FILE = D:\Projects\CPP\ProtoApp\docs\index.html
   TARGET_PDB = index.html.dbg
 
 
@@ -102,9 +102,9 @@ build rebuild_cache: phony CMakeFiles/rebuild_cache.util
 # =============================================================================
 # Target aliases.
 
-build index: phony D$:/Projects/CPP/ProtoApp/bin_web/index.html
+build index: phony D$:/Projects/CPP/ProtoApp/docs/index.html
 
-build index.html: phony D$:/Projects/CPP/ProtoApp/bin_web/index.html
+build index.html: phony D$:/Projects/CPP/ProtoApp/docs/index.html
 
 # =============================================================================
 # Folder targets.
@@ -114,7 +114,7 @@ build index.html: phony D$:/Projects/CPP/ProtoApp/bin_web/index.html
 #############################################
 # Folder: D:/Projects/CPP/ProtoApp/build_web
 
-build all: phony D$:/Projects/CPP/ProtoApp/bin_web/index.html
+build all: phony D$:/Projects/CPP/ProtoApp/docs/index.html
 
 # =============================================================================
 # Built-in targets

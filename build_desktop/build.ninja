@@ -51,7 +51,7 @@ build CMakeFiles/app.dir/src/main.cpp.obj: CXX_COMPILER__app_unscanned_ D$:/Proj
   OBJECT_DIR = CMakeFiles\app.dir
   OBJECT_FILE_DIR = CMakeFiles\app.dir\src
   TARGET_COMPILE_PDB = CMakeFiles\app.dir\
-  TARGET_PDB = D:\Projects\CPP\ProtoApp\bin_desktop\app.pdb
+  TARGET_PDB = D:\Projects\CPP\ProtoApp\bin\app.pdb
 
 build CMakeFiles/app.dir/src/ecs/draggable_rect.cpp.obj: CXX_COMPILER__app_unscanned_ D$:/Projects/CPP/ProtoApp/src/ecs/draggable_rect.cpp || cmake_object_order_depends_target_app
   DEP_FILE = CMakeFiles\app.dir\src\ecs\draggable_rect.cpp.obj.d
@@ -60,7 +60,7 @@ build CMakeFiles/app.dir/src/ecs/draggable_rect.cpp.obj: CXX_COMPILER__app_unsca
   OBJECT_DIR = CMakeFiles\app.dir
   OBJECT_FILE_DIR = CMakeFiles\app.dir\src\ecs
   TARGET_COMPILE_PDB = CMakeFiles\app.dir\
-  TARGET_PDB = D:\Projects\CPP\ProtoApp\bin_desktop\app.pdb
+  TARGET_PDB = D:\Projects\CPP\ProtoApp\bin\app.pdb
 
 
 # =============================================================================
@@ -68,18 +68,18 @@ build CMakeFiles/app.dir/src/ecs/draggable_rect.cpp.obj: CXX_COMPILER__app_unsca
 
 
 #############################################
-# Link the executable D:\Projects\CPP\ProtoApp\bin_desktop\app.exe
+# Link the executable D:\Projects\CPP\ProtoApp\bin\app.exe
 
-build D$:/Projects/CPP/ProtoApp/bin_desktop/app.exe: CXX_EXECUTABLE_LINKER__app_ CMakeFiles/app.dir/src/main.cpp.obj CMakeFiles/app.dir/src/ecs/draggable_rect.cpp.obj
+build D$:/Projects/CPP/ProtoApp/bin/app.exe: CXX_EXECUTABLE_LINKER__app_ CMakeFiles/app.dir/src/main.cpp.obj CMakeFiles/app.dir/src/ecs/draggable_rect.cpp.obj
   LINK_LIBRARIES = -lraylib  -lopengl32  -lgdi32  -lwinmm  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   LINK_PATH = -LD:/Projects/CPP/ProtoApp/libs/raylib/lib_desktop
   OBJECT_DIR = CMakeFiles\app.dir
   POST_BUILD = cd .
   PRE_LINK = cd .
   TARGET_COMPILE_PDB = CMakeFiles\app.dir\
-  TARGET_FILE = D:\Projects\CPP\ProtoApp\bin_desktop\app.exe
+  TARGET_FILE = D:\Projects\CPP\ProtoApp\bin\app.exe
   TARGET_IMPLIB = libapp.dll.a
-  TARGET_PDB = D:\Projects\CPP\ProtoApp\bin_desktop\app.pdb
+  TARGET_PDB = D:\Projects\CPP\ProtoApp\bin\app.pdb
 
 
 #############################################
@@ -107,9 +107,9 @@ build rebuild_cache: phony CMakeFiles/rebuild_cache.util
 # =============================================================================
 # Target aliases.
 
-build app: phony D$:/Projects/CPP/ProtoApp/bin_desktop/app.exe
+build app: phony D$:/Projects/CPP/ProtoApp/bin/app.exe
 
-build app.exe: phony D$:/Projects/CPP/ProtoApp/bin_desktop/app.exe
+build app.exe: phony D$:/Projects/CPP/ProtoApp/bin/app.exe
 
 # =============================================================================
 # Folder targets.
@@ -119,7 +119,7 @@ build app.exe: phony D$:/Projects/CPP/ProtoApp/bin_desktop/app.exe
 #############################################
 # Folder: D:/Projects/CPP/ProtoApp/build_desktop
 
-build all: phony D$:/Projects/CPP/ProtoApp/bin_desktop/app.exe
+build all: phony D$:/Projects/CPP/ProtoApp/bin/app.exe
 
 # =============================================================================
 # Built-in targets

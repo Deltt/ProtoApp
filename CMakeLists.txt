@@ -20,7 +20,7 @@ include_directories(libs/raylib/include)
 if(${TARGET} STREQUAL "desktop")
     message(STATUS "Configuring for Desktop build")
 
-    set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin_desktop)
+    set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)
     link_directories(${CMAKE_SOURCE_DIR}/libs/raylib/lib_desktop)
 
     add_executable(app ${SRC})
@@ -29,7 +29,7 @@ if(${TARGET} STREQUAL "desktop")
 elseif(${TARGET} STREQUAL "web")
     message(STATUS "Configuring for WebAssembly build")
 
-    set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin_web)
+    set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/docs)
     link_directories(${CMAKE_SOURCE_DIR}/libs/raylib/lib_web)
 
     add_executable(index ${SRC})
