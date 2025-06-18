@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Raylib Web</title>
+    <style>
+        body { 
+            margin: 0; 
+            padding: 0; 
+            overflow: hidden;
+            background: black;
+        }
+        canvas { 
+            display: block;
+            width: 100vw;
+            height: 100vh;
+            object-fit: contain;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+    <script>
+        var Module = {
+            canvas: (function() {
+                var canvas = document.getElementById('canvas');
+                
+                // Function to resize canvas to window size
+                function resizeCanvas() {
+                    canvas.width = window.innerWidth;
+                    canvas.height = window.innerHeight;
+                }
+                
+                // Resize on load and window resize
+                window.addEventListener('resize', resizeCanvas);
+                resizeCanvas();
+                
+                return canvas;
+            })()
+        };
+    </script>
+    {{{ SCRIPT }}}
+</body>
+</html>

@@ -1,0 +1,3 @@
+D:/Projects/CPP/ProtoApp/build_web/CMakeFiles/index.dir
+D:/Projects/CPP/ProtoApp/build_web/CMakeFiles/edit_cache.dir
+D:/Projects/CPP/ProtoApp/build_web/CMakeFiles/rebuild_cache.dir

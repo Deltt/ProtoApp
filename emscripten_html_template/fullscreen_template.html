@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Raylib Web</title>
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+    <script>
+        var Module = {
+            canvas: (function() {
+                var canvas = document.getElementById('canvas');
+                
+                // Function to resize canvas to window size
+                function resizeCanvas() {
+                    canvas.width = window.innerWidth;
+                    canvas.height = window.innerHeight;
+                }
+                
+                // Resize on load and window resize
+                window.addEventListener('resize', resizeCanvas);
+                resizeCanvas();
+                
+                return canvas;
+            })()
+        };
+    </script>
+    {{{ SCRIPT }}}
+</body>
+</html>
