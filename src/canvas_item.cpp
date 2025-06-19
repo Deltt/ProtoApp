@@ -18,7 +18,14 @@ void CanvasItem::draw() const
 {
 	float zoom_modifier = CanvasNavigator::getInstance().zoom_modifier;
     DrawRectangle(bounding_box.x, bounding_box.y, bounding_box.width, bounding_box.height, {255, 255, 255, 255});
-	DrawTextEx(CanvasNavigator::getInstance().font[0], title, {bounding_box.x, bounding_box.y - 32 * zoom_modifier}, 32 * zoom_modifier, 0, {80, 80, 80, 255});
+
+	if(zoom_modifier < 3.0f) {
+		DrawTextEx(CanvasNavigator::getInstance().font[0], title, {bounding_box.x, bounding_box.y - 10 * zoom_modifier}, 10 * zoom_modifier, 0, {80, 80, 80, 255});
+	}
+	else {
+		DrawTextEx(CanvasNavigator::getInstance().font[0], "...", {bounding_box.x, bounding_box.y - 10 * zoom_modifier}, 10 * zoom_modifier, 0, {80, 80, 80, 255});
+	}
+	
 }
 
 int updateCanvasItems(Vector2 p_mouse_world_position)

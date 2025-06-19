@@ -71,9 +71,7 @@ void initializeApp()
 	canvas_navigator.loadFonts();
 
 	canvas_items.reserve(128);
-	canvas_items.push_back(CanvasItem({400, 300, 400, 200}));
-	canvas_items[0].bounding_box.x = 500;
-	canvas_items.push_back(CanvasItem({800, 400, 400, 200}, "Test"));
+	canvas_items.push_back(CanvasItem({0, 0, 400, 200}));
 }
 
 void initializeCanvas(int screenWidth, int screenHeight)
@@ -102,6 +100,7 @@ void updateCanvas(Camera2D& camera)
         BeginMode2D(camera);
 
 		drawCanvasItems();
+		DrawRectangle(-10, - 10, 20, 20, (Color){255, 0, 0, 255});
 		
         EndMode2D();
         

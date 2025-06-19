@@ -6,6 +6,7 @@ class CanvasNavigator {
 public:
     static CanvasNavigator& getInstance();
 
+	Vector2 canvas_bounds;
 	Camera2D canvas_camera;
 	float zoom_modifier;
 	bool request_canvas_update;
