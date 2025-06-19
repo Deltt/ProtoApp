@@ -1,5 +1,5 @@
 # ninja log v6
-17	294	7720004979989428	CMakeFiles/index.dir/src/canvas_navigator.cpp.o	8d1a17acd6f0a837
-21	705	7720004980029434	CMakeFiles/index.dir/src/ecs/canvas_item.cpp.o	f9ced6ab4fc30365
-11	1190	7720004979929415	CMakeFiles/index.dir/src/main.cpp.o	57d6337ef96d77d
-1191	1868	7720004991735306	D:/Projects/CPP/ProtoApp/docs/index.html	6e1ce98a4e95a1e3
+18	323	7720413433926651	CMakeFiles/index.dir/src/canvas_navigator.cpp.o	8d1a17acd6f0a837
+22	850	7720413433976658	CMakeFiles/index.dir/src/canvas_item.cpp.o	f35e538859ce1bdf
+12	1359	7720413433866635	CMakeFiles/index.dir/src/main.cpp.o	57d6337ef96d77d
+1360	2131	7720413447350989	D:/Projects/CPP/ProtoApp/docs/index.html	37cfa55cf599e963

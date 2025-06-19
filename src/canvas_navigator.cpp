@@ -41,6 +41,7 @@ void CanvasNavigator::zoom()
 		canvas_camera.zoom += wheel_scroll * canvas_camera.zoom * 0.05f;
 		if (canvas_camera.zoom < 0.1f) canvas_camera.zoom = 0.1f;
 		if (canvas_camera.zoom > 5.0f) canvas_camera.zoom = 5.0f;
+		zoom_modifier = 1.0f / canvas_camera.zoom;
 
 		Vector2 mouseWorldPosAfterZoom = GetScreenToWorld2D(GetMousePosition(), canvas_camera);
 
@@ -59,6 +60,13 @@ void CanvasNavigator::pan()
 
 	if(wheel_pressed) {
 		canvas_camera.offset = Vector2Add(canvas_camera.offset, mouse_movement);
+		canvas_camera.offset.x = roundf(canvas_camera.offset.x);
+		canvas_camera.offset.y = roundf(canvas_camera.offset.y);
 		request_canvas_update = true;
 	}
+}
+
+void CanvasNavigator::loadFonts()
+{
+	font[0] = LoadFontEx("../fonts/Pragmatica.ttf", 128, 0, 95);
 }

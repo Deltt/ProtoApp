@@ -9,6 +9,7 @@ public:
 	Camera2D canvas_camera;
 	float zoom_modifier;
 	bool request_canvas_update;
+	Font font[1];
 
     CanvasNavigator(const CanvasNavigator&) = delete;
     CanvasNavigator& operator=(const CanvasNavigator&) = delete;
@@ -17,6 +18,7 @@ public:
 	void navigate();
 	void zoom();
 	void pan();
+	void loadFonts();
 
 private:
     CanvasNavigator();

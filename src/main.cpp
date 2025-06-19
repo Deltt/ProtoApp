@@ -5,13 +5,13 @@
 #include <thread>
 #include <chrono>
 
-#include "ecs/canvas_item.hpp"
+#include "canvas_item.hpp"
 #include "canvas_navigator.hpp"
 
-CanvasNavigator& canvas_navigator = CanvasNavigator::getInstance();
+CanvasNavigator& canvas_navigator {CanvasNavigator::getInstance()};
 const Color BACKGROUND_COLOR {220, 220, 220 ,255};
-bool shouldCanvasUpdate = true;
-int canvas_updates = 0;
+bool shouldCanvasUpdate {true};
+int canvas_updates {0};
 RenderTexture2D canvasTexture;
 
 void initializeApp();
@@ -67,6 +67,8 @@ void initializeApp()
 	InitWindow(800, 450, "ProtoApp");
 	SetTargetFPS(144);
 	MaximizeWindow();
+
+	canvas_navigator.loadFonts();
 
 	canvas_items.reserve(128);
 	canvas_items.push_back(CanvasItem({400, 300, 400, 200}));

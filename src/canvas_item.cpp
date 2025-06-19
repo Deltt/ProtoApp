@@ -1,4 +1,5 @@
 #include "canvas_item.hpp"
+#include "canvas_navigator.hpp"
 #include <cstring>
 
 std::vector<CanvasItem> canvas_items;
@@ -15,8 +16,9 @@ CanvasItem::CanvasItem(Rectangle p_bounding_box, std::string p_title) : bounding
 
 void CanvasItem::draw() const
 {
+	float zoom_modifier = CanvasNavigator::getInstance().zoom_modifier;
     DrawRectangle(bounding_box.x, bounding_box.y, bounding_box.width, bounding_box.height, {255, 255, 255, 255});
-    DrawText(title, bounding_box.x + 32.0f, bounding_box.y - 16.0, 16, {0, 0, 0, 255});
+	DrawTextEx(CanvasNavigator::getInstance().font[0], title, {bounding_box.x, bounding_box.y - 32 * zoom_modifier}, 32 * zoom_modifier, 0, {80, 80, 80, 255});
 }
 
 int updateCanvasItems(Vector2 p_mouse_world_position)
