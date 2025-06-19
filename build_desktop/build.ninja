@@ -53,8 +53,17 @@ build CMakeFiles/app.dir/src/main.cpp.obj: CXX_COMPILER__app_unscanned_ D$:/Proj
   TARGET_COMPILE_PDB = CMakeFiles\app.dir\
   TARGET_PDB = D:\Projects\CPP\ProtoApp\bin\app.pdb
 
-build CMakeFiles/app.dir/src/ecs/draggable_rect.cpp.obj: CXX_COMPILER__app_unscanned_ D$:/Projects/CPP/ProtoApp/src/ecs/draggable_rect.cpp || cmake_object_order_depends_target_app
-  DEP_FILE = CMakeFiles\app.dir\src\ecs\draggable_rect.cpp.obj.d
+build CMakeFiles/app.dir/src/canvas_navigator.cpp.obj: CXX_COMPILER__app_unscanned_ D$:/Projects/CPP/ProtoApp/src/canvas_navigator.cpp || cmake_object_order_depends_target_app
+  DEP_FILE = CMakeFiles\app.dir\src\canvas_navigator.cpp.obj.d
+  FLAGS = -std=gnu++23
+  INCLUDES = -ID:/Projects/CPP/ProtoApp/libs/raylib/include
+  OBJECT_DIR = CMakeFiles\app.dir
+  OBJECT_FILE_DIR = CMakeFiles\app.dir\src
+  TARGET_COMPILE_PDB = CMakeFiles\app.dir\
+  TARGET_PDB = D:\Projects\CPP\ProtoApp\bin\app.pdb
+
+build CMakeFiles/app.dir/src/ecs/canvas_item.cpp.obj: CXX_COMPILER__app_unscanned_ D$:/Projects/CPP/ProtoApp/src/ecs/canvas_item.cpp || cmake_object_order_depends_target_app
+  DEP_FILE = CMakeFiles\app.dir\src\ecs\canvas_item.cpp.obj.d
   FLAGS = -std=gnu++23
   INCLUDES = -ID:/Projects/CPP/ProtoApp/libs/raylib/include
   OBJECT_DIR = CMakeFiles\app.dir
@@ -70,7 +79,7 @@ build CMakeFiles/app.dir/src/ecs/draggable_rect.cpp.obj: CXX_COMPILER__app_unsca
 #############################################
 # Link the executable D:\Projects\CPP\ProtoApp\bin\app.exe
 
-build D$:/Projects/CPP/ProtoApp/bin/app.exe: CXX_EXECUTABLE_LINKER__app_ CMakeFiles/app.dir/src/main.cpp.obj CMakeFiles/app.dir/src/ecs/draggable_rect.cpp.obj
+build D$:/Projects/CPP/ProtoApp/bin/app.exe: CXX_EXECUTABLE_LINKER__app_ CMakeFiles/app.dir/src/main.cpp.obj CMakeFiles/app.dir/src/canvas_navigator.cpp.obj CMakeFiles/app.dir/src/ecs/canvas_item.cpp.obj
   LINK_LIBRARIES = -lraylib  -lopengl32  -lgdi32  -lwinmm  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   LINK_PATH = -LD:/Projects/CPP/ProtoApp/libs/raylib/lib_desktop
   OBJECT_DIR = CMakeFiles\app.dir

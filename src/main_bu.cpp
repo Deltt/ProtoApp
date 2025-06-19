@@ -15,7 +15,7 @@ DraggableRect TestMovable({900, 500}, {600, 400});
 
 
 
-void NavigateCanvas(Camera2D& camera)
+void navigateCanvas(Camera2D& camera)
 {
 	// Inputs
 	float wheel_scroll = GetMouseWheelMove();
@@ -43,7 +43,7 @@ void NavigateCanvas(Camera2D& camera)
 	}
 }
 
-void DrawCanvas(Camera2D& camera)
+void drawCanvas(Camera2D& camera)
 {
 	BeginDrawing();
 
@@ -83,10 +83,10 @@ int main()
     while (!WindowShouldClose())
     {
 		// Canvas Navigation Handling (Zoom, Pan)
-		NavigateCanvas(camera);
+		navigateCanvas(camera);
 
 		// Draw
-		DrawCanvas(camera);
+		drawCanvas(camera);
     }
 
     CloseWindow();

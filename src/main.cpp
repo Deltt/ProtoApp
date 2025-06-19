@@ -5,115 +5,29 @@
 #include <thread>
 #include <chrono>
 
-#include "ecs/draggable_rect.hpp"
+#include "ecs/canvas_item.hpp"
+#include "canvas_navigator.hpp"
 
-Camera2D camera;
+CanvasNavigator& canvas_navigator = CanvasNavigator::getInstance();
 const Color BACKGROUND_COLOR {220, 220, 220 ,255};
-
 bool shouldCanvasUpdate = true;
 int canvas_updates = 0;
-
-
 RenderTexture2D canvasTexture;
-void InitializeCanvas(int screenWidth, int screenHeight)
-{
-    canvasTexture = LoadRenderTexture(screenWidth, screenHeight);
 
-    BeginTextureMode(canvasTexture);
-    ClearBackground(BACKGROUND_COLOR);
-    EndTextureMode();
-}
+void initializeApp();
+void initializeCanvas(int screenWidth, int screenHeight);
+void resizeCanvas(int newWidth, int newHeight);
+void updateCanvas(Camera2D& camera);
+void drawCanvas();
 
-void ResizeCanvas(int newWidth, int newHeight)
-{
-    UnloadRenderTexture(canvasTexture);
-    canvasTexture = LoadRenderTexture(newWidth, newHeight);
-    shouldCanvasUpdate = true;
-}
 
-void UpdateCanvas(Camera2D& camera)
-{
-    if (shouldCanvasUpdate) {
-        BeginTextureMode(canvasTexture);
-        ClearBackground(BACKGROUND_COLOR);
-        
-        BeginMode2D(camera);
-		DrawDraggableRects();
-		
-        EndMode2D();
-        
-        EndTextureMode();
-        shouldCanvasUpdate = false;
-    }
-
-	canvas_updates++;
-}
-
-void DrawCanvas()
-{
-    BeginDrawing();
-    DrawTextureRec(canvasTexture.texture, 
-                   (Rectangle){0, 0, (float)canvasTexture.texture.width, -(float)canvasTexture.texture.height}, 
-                   (Vector2){0, 0}, WHITE);
-    
-    // Optional: Draw UI elements that should always update (like cursor, selection handles, etc.)
-    // DrawUI();
-    
-    EndDrawing();
-}
-
-void NavigateCanvas(Camera2D& camera)
-{
-	// Inputs
-	float wheel_scroll = GetMouseWheelMove();
-	bool wheel_pressed = IsMouseButtonDown(MOUSE_MIDDLE_BUTTON);
-	Vector2 mouse_movement = GetMouseDelta();
-
-	// Navigation Logic
-	if (wheel_scroll != 0) {
-		Vector2 mouseWorldPosBeforeZoom = GetScreenToWorld2D(GetMousePosition(), camera);
-
-		camera.zoom += wheel_scroll * camera.zoom * 0.05f;
-		if (camera.zoom < 0.1f) camera.zoom = 0.1f;
-		if (camera.zoom > 5.0f) camera.zoom = 5.0f;
-
-		Vector2 mouseWorldPosAfterZoom = GetScreenToWorld2D(GetMousePosition(), camera);
-
-		camera.target.x += mouseWorldPosBeforeZoom.x - mouseWorldPosAfterZoom.x;
-		camera.target.y += mouseWorldPosBeforeZoom.y - mouseWorldPosAfterZoom.y;
-		shouldCanvasUpdate = true;
-	}
-
-	if(wheel_pressed) {
-		camera.offset = Vector2Add(camera.offset, mouse_movement);
-		shouldCanvasUpdate = true;
-	}
-}
-
-void InitializeApp()
-{
-	SetConfigFlags(FLAG_WINDOW_RESIZABLE);
-	InitWindow(800, 450, "ProtoApp");
-	SetTargetFPS(144);
-	MaximizeWindow();
-
-	camera = { 0 };
-	camera.target = (Vector2){ 0, 0 };
-    camera.offset = (Vector2){ 0, 0 };
-    camera.rotation = 0.0f;
-    camera.zoom = 1.0f;
-
-	draggable_rects.reserve(128);
-	draggable_rects.push_back(DraggableRect());
-	draggable_rects[0].rect.x = 500;
-	draggable_rects.push_back(DraggableRect());
-}
+// -----------------------------------------------------------------------
 
 int main()
 {
-	InitializeApp();
+	initializeApp();
 
-	InitializeCanvas(GetScreenWidth(), GetScreenHeight());
+	initializeCanvas(GetScreenWidth(), GetScreenHeight());
 
 	int lastScreenWidth = GetScreenWidth();
     int lastScreenHeight = GetScreenHeight();
@@ -125,24 +39,86 @@ int main()
         int currentWidth = GetScreenWidth();
         int currentHeight = GetScreenHeight();
         if (currentWidth != lastScreenWidth || currentHeight != lastScreenHeight) {
-            ResizeCanvas(currentWidth, currentHeight);
-            camera.offset = (Vector2){ currentWidth / 2.0f, currentHeight / 2.0f };
+            resizeCanvas(currentWidth, currentHeight);
+            canvas_navigator.canvas_camera.offset = (Vector2){ currentWidth / 2.0f, currentHeight / 2.0f };
             lastScreenWidth = currentWidth;
             lastScreenHeight = currentHeight;
         }
 
         // Canvas Navigation Handling (Zoom, Pan)
-        NavigateCanvas(camera);
+		canvas_navigator.navigate();
 
         // Update Canvas Texture (if needed)
-        UpdateCanvas(camera);
+        updateCanvas(canvas_navigator.canvas_camera);
 
         // Draw the cached canvas
-        DrawCanvas();
+        drawCanvas();
     }
 
 	UnloadRenderTexture(canvasTexture);
     CloseWindow();
 
     return 0;
+}
+
+void initializeApp()
+{
+	SetConfigFlags(FLAG_WINDOW_RESIZABLE);
+	InitWindow(800, 450, "ProtoApp");
+	SetTargetFPS(144);
+	MaximizeWindow();
+
+	canvas_items.reserve(128);
+	canvas_items.push_back(CanvasItem({400, 300, 400, 200}));
+	canvas_items[0].bounding_box.x = 500;
+	canvas_items.push_back(CanvasItem({800, 400, 400, 200}, "Test"));
+}
+
+void initializeCanvas(int screenWidth, int screenHeight)
+{
+    canvasTexture = LoadRenderTexture(screenWidth, screenHeight);
+
+    BeginTextureMode(canvasTexture);
+    ClearBackground(BACKGROUND_COLOR);
+    EndTextureMode();
+}
+
+void resizeCanvas(int newWidth, int newHeight)
+{
+    UnloadRenderTexture(canvasTexture);
+    canvasTexture = LoadRenderTexture(newWidth, newHeight);
+    shouldCanvasUpdate = true;
+}
+
+void updateCanvas(Camera2D& camera)
+{
+    if (canvas_navigator.request_canvas_update) {
+        BeginTextureMode(canvasTexture);
+        ClearBackground(BACKGROUND_COLOR);
+        
+		// Mode 2D (Camera transformations)
+        BeginMode2D(camera);
+
+		drawCanvasItems();
+		
+        EndMode2D();
+        
+        EndTextureMode();
+        canvas_navigator.request_canvas_update = false;
+    }
+
+	canvas_updates++;
+}
+
+void drawCanvas()
+{
+    BeginDrawing();
+    DrawTextureRec(canvasTexture.texture, 
+                   (Rectangle){0, 0, (float)canvasTexture.texture.width, -(float)canvasTexture.texture.height}, 
+                   (Vector2){0, 0}, WHITE);
+    
+    // Optional: Draw UI elements that should always update (like cursor, selection handles, etc.)
+    // DrawUI();
+    
+    EndDrawing();
 }
