@@ -38,7 +38,7 @@ elseif(${TARGET} STREQUAL "web")
     set_target_properties(index PROPERTIES
         #LINK_FLAGS "-s USE_GLFW=3 -s ASYNCIFY"
 		#LINK_FLAGS "-s USE_GLFW=3 -s ASYNCIFY --shell-file ${CMAKE_SOURCE_DIR}/emscripten_html_template/fullscreen_template.html"
-		LINK_FLAGS "-s USE_GLFW=3 -s ASYNCIFY --shell-file ${CMAKE_SOURCE_DIR}/emscripten_html_template/centered.html"
+		LINK_FLAGS "-s USE_GLFW=3 -s ASYNCIFY --shell-file ${CMAKE_SOURCE_DIR}/emscripten_html_template/centered.html --preload-file ../fonts/"
         SUFFIX ".html"
     )
 else()
