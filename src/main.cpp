@@ -9,14 +9,17 @@
 #include "canvas_navigator.hpp"
 
 CanvasNavigator& canvas_navigator {CanvasNavigator::getInstance()};
+
 const Color BACKGROUND_COLOR {220, 220, 220 ,255};
-bool shouldCanvasUpdate {true};
+RenderTexture2D canvas_texture;
 int canvas_updates {0};
-RenderTexture2D canvasTexture;
 
 void initializeApp();
-void initializeCanvas(int screenWidth, int screenHeight);
-void resizeCanvas(int newWidth, int newHeight);
+void initializeData();
+void initializeWindow();
+void initializeCanvas(int screen_width, int screen_height);
+void handleWindowResize(int& last_screen_width, int& last_screen_height);
+void resizeCanvas(int resize_width, int resize_height);
 void updateCanvas(Camera2D& camera);
 void drawCanvas();
 
@@ -27,35 +30,22 @@ int main()
 {
 	initializeApp();
 
-	initializeCanvas(GetScreenWidth(), GetScreenHeight());
-
-	int lastScreenWidth = GetScreenWidth();
-    int lastScreenHeight = GetScreenHeight();
+	int last_screen_width = GetScreenWidth();
+    int last_screen_height = GetScreenHeight();
 
     // Main Loop
     while (!WindowShouldClose())
     {
-        // Handle window resize
-        int currentWidth = GetScreenWidth();
-        int currentHeight = GetScreenHeight();
-        if (currentWidth != lastScreenWidth || currentHeight != lastScreenHeight) {
-            resizeCanvas(currentWidth, currentHeight);
-            canvas_navigator.canvas_camera.offset = (Vector2){ currentWidth / 2.0f, currentHeight / 2.0f };
-            lastScreenWidth = currentWidth;
-            lastScreenHeight = currentHeight;
-        }
+		handleWindowResize(last_screen_width, last_screen_height);
 
-        // Canvas Navigation Handling (Zoom, Pan)
 		canvas_navigator.navigate();
 
-        // Update Canvas Texture (if needed)
         updateCanvas(canvas_navigator.canvas_camera);
 
-        // Draw the cached canvas
         drawCanvas();
     }
 
-	UnloadRenderTexture(canvasTexture);
+	UnloadRenderTexture(canvas_texture);
     CloseWindow();
 
     return 0;
@@ -63,37 +53,58 @@ int main()
 
 void initializeApp()
 {
-	SetConfigFlags(FLAG_WINDOW_RESIZABLE);
-	InitWindow(800, 450, "ProtoApp");
-	SetTargetFPS(144);
-	MaximizeWindow();
+	initializeData();
+	initializeWindow();
+	initializeCanvas(GetScreenWidth(), GetScreenHeight());
+}
 
-	canvas_navigator.loadFonts();
-
+void initializeData()
+{
 	canvas_items.reserve(128);
 	canvas_items.push_back(CanvasItem({0, 0, 400, 200}));
 }
 
-void initializeCanvas(int screenWidth, int screenHeight)
+void initializeWindow()
 {
-    canvasTexture = LoadRenderTexture(screenWidth, screenHeight);
+	SetConfigFlags(FLAG_WINDOW_RESIZABLE);
+	InitWindow(1920, 1080, "ProtoApp");
+	SetTargetFPS(144);
+	MaximizeWindow();
+}
 
-    BeginTextureMode(canvasTexture);
+void initializeCanvas(int screen_width, int screen_height)
+{
+	canvas_navigator.loadFonts();
+    canvas_texture = LoadRenderTexture(screen_width, screen_height);
+
+    BeginTextureMode(canvas_texture);
     ClearBackground(BACKGROUND_COLOR);
     EndTextureMode();
 }
 
-void resizeCanvas(int newWidth, int newHeight)
+void handleWindowResize(int& last_screen_width, int& last_screen_height)
 {
-    UnloadRenderTexture(canvasTexture);
-    canvasTexture = LoadRenderTexture(newWidth, newHeight);
-    shouldCanvasUpdate = true;
+	int current_width = GetScreenWidth();
+	int current_height = GetScreenHeight();
+	if (current_width != last_screen_width || current_height != last_screen_height) {
+		resizeCanvas(current_width, current_height);
+		canvas_navigator.canvas_camera.offset = (Vector2){ current_width / 2.0f, current_height / 2.0f };
+		last_screen_width = current_width;
+		last_screen_height = current_height;
+	}
+}
+
+void resizeCanvas(int resize_width, int resize_height)
+{
+    UnloadRenderTexture(canvas_texture);
+    canvas_texture = LoadRenderTexture(resize_width, resize_height);
+    canvas_navigator.request_canvas_update = true;
 }
 
 void updateCanvas(Camera2D& camera)
 {
     if (canvas_navigator.request_canvas_update) {
-        BeginTextureMode(canvasTexture);
+        BeginTextureMode(canvas_texture);
         ClearBackground(BACKGROUND_COLOR);
         
 		// Mode 2D (Camera transformations)
@@ -114,8 +125,8 @@ void updateCanvas(Camera2D& camera)
 void drawCanvas()
 {
     BeginDrawing();
-    DrawTextureRec(canvasTexture.texture, 
-                   (Rectangle){0, 0, (float)canvasTexture.texture.width, -(float)canvasTexture.texture.height}, 
+    DrawTextureRec(canvas_texture.texture, 
+                   (Rectangle){0, 0, (float)canvas_texture.texture.width, -(float)canvas_texture.texture.height}, 
                    (Vector2){0, 0}, WHITE);
     
     // Optional: Draw UI elements that should always update (like cursor, selection handles, etc.)

@@ -9,7 +9,7 @@
 
 const Color BACKGROUND_COLOR {220, 220, 220 ,255};
 
-bool shouldCanvasUpdate = true;
+bool should_canvas_update = true;
 
 DraggableRect TestMovable({900, 500}, {600, 400});
 
@@ -34,12 +34,12 @@ void navigateCanvas(Camera2D& camera)
 
 		camera.target.x += mouseWorldPosBeforeZoom.x - mouseWorldPosAfterZoom.x;
 		camera.target.y += mouseWorldPosBeforeZoom.y - mouseWorldPosAfterZoom.y;
-		shouldCanvasUpdate = true;
+		should_canvas_update = true;
 	}
 
 	if(wheel_pressed) {
 		camera.offset = Vector2Add(camera.offset, mouse_movement);
-		shouldCanvasUpdate = true;
+		should_canvas_update = true;
 	}
 }
 
@@ -49,7 +49,7 @@ void drawCanvas(Camera2D& camera)
 
 	ClearBackground(BACKGROUND_COLOR);
 
-	if(shouldCanvasUpdate)
+	if(should_canvas_update)
 	{
 		BeginMode2D(camera);
 		TestMovable.Draw();
@@ -61,7 +61,7 @@ void drawCanvas(Camera2D& camera)
 	}
 
 	EndDrawing();
-	shouldCanvasUpdate = false;
+	should_canvas_update = false;
 }
 
 int main()
