@@ -1,27 +1,33 @@
 #pragma once
+#ifndef CANVAS_NAVIGATOR_H
+#define CANVAS_NAVIGATOR_H
+
 #include "raylib.h"
 #include <raymath.h>
+#include "globals.hpp"
 
 class CanvasNavigator {
 public:
     static CanvasNavigator& getInstance();
 
+    CanvasNavigator(const CanvasNavigator&) = delete;
+    CanvasNavigator& operator=(const CanvasNavigator&) = delete;
+
 	Vector2 canvas_bounds;
 	Camera2D canvas_camera;
 	float zoom_modifier;
 	bool request_canvas_update;
-	Font font[1];
 
-    CanvasNavigator(const CanvasNavigator&) = delete;
-    CanvasNavigator& operator=(const CanvasNavigator&) = delete;
-
+	void process();
 	Vector2 getWorldMousePosition();
 	void navigate();
 	void zoom();
 	void pan();
-	void loadFonts();
+	
 
 private:
     CanvasNavigator();
     ~CanvasNavigator();
 };
+
+#endif

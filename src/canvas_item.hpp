@@ -1,7 +1,11 @@
 #pragma once
+#ifndef CANVAS_ITEM_H
+#define CANVAS_ITEM_H
+
 #include "raylib.h"
 #include <vector>
 #include <string>
+#include "globals.hpp"
 
 struct CanvasItem;
 extern std::vector<CanvasItem> canvas_items;
@@ -19,4 +23,5 @@ struct CanvasItem {
 };
 
 int updateCanvasItems(Vector2 p_mouse_world_position);
-void drawCanvasItems();
+
+#endif

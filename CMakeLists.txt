@@ -11,7 +11,7 @@ if(NOT DEFINED TARGET)
 endif()
 
 # Common source
-set(SRC src/main.cpp src/canvas_navigator.cpp src/canvas_item.cpp)
+set(SRC src/main.cpp src/canvas_item.cpp src/canvas_navigator.cpp  src/canvas_manager.cpp src/canvas_renderer.cpp)
 
 # Header include path (shared)
 include_directories(libs/raylib/include)

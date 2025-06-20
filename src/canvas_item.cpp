@@ -1,5 +1,4 @@
 #include "canvas_item.hpp"
-#include "canvas_navigator.hpp"
 #include <cstring>
 
 std::vector<CanvasItem> canvas_items;
@@ -20,10 +19,10 @@ void CanvasItem::draw() const
     DrawRectangle(bounding_box.x, bounding_box.y, bounding_box.width, bounding_box.height, {255, 255, 255, 255});
 
 	if(zoom_modifier < 3.0f) {
-		DrawTextEx(CanvasNavigator::getInstance().font[0], title, {bounding_box.x, bounding_box.y - 10 * zoom_modifier}, 10 * zoom_modifier, 0, {80, 80, 80, 255});
+		DrawTextEx(CanvasRenderer::getInstance().font[0], title, {bounding_box.x, bounding_box.y - 10 * zoom_modifier}, 10 * zoom_modifier, 0, {80, 80, 80, 255});
 	}
 	else {
-		DrawTextEx(CanvasNavigator::getInstance().font[0], "...", {bounding_box.x, bounding_box.y - 10 * zoom_modifier}, 10 * zoom_modifier, 0, {80, 80, 80, 255});
+		DrawTextEx(CanvasRenderer::getInstance().font[0], "...", {bounding_box.x, bounding_box.y - 10 * zoom_modifier}, 10 * zoom_modifier, 0, {80, 80, 80, 255});
 	}
 	
 }
@@ -31,12 +30,4 @@ void CanvasItem::draw() const
 int updateCanvasItems(Vector2 p_mouse_world_position)
 {
 	return 0;
-}
-
-void drawCanvasItems()
-{
-	for(int i = 0; i < canvas_items.size(); i++)
-	{
-		canvas_items[i].draw();
-	}
 }

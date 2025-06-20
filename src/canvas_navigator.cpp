@@ -21,6 +21,11 @@ CanvasNavigator& CanvasNavigator::getInstance() {
     return instance;
 }
 
+void CanvasNavigator::process()
+{
+	navigate();
+}
+
 Vector2 CanvasNavigator::getWorldMousePosition()
 {
 	return GetScreenToWorld2D(GetMousePosition(), canvas_camera);
@@ -75,9 +80,4 @@ void CanvasNavigator::pan()
 
 		request_canvas_update = true;
 	}
-}
-
-void CanvasNavigator::loadFonts()
-{
-	font[0] = LoadFontEx("../fonts/Pragmatica.ttf", 10, 0, 95);
 }
