@@ -68,6 +68,7 @@ void initializeWindow()
 {
 	SetConfigFlags(FLAG_WINDOW_RESIZABLE);
 	InitWindow(1920, 1080, "ProtoApp");
+	ClearBackground(BACKGROUND_COLOR);
 	SetTargetFPS(144);
 	MaximizeWindow();
 }
