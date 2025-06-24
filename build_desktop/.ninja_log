@@ -1,7 +1,8 @@
 # ninja log v6
-19	518	7721435870173550	CMakeFiles/app.dir/src/canvas_manager.cpp.obj	98a19099970862c0
-21	524	7721435870193562	CMakeFiles/app.dir/src/canvas_renderer.cpp.obj	10c87145b7cb60b
-17	531	7721435870153551	CMakeFiles/app.dir/src/canvas_navigator.cpp.obj	41907042f3a48ecf
-15	534	7721435870133546	CMakeFiles/app.dir/src/canvas_item.cpp.obj	1e6a615e24f001eb
-12	1202	7721435870103533	CMakeFiles/app.dir/src/main.cpp.obj	14e98f170444f506
-1203	1323	7721435882011205	D:/Projects/CPP/ProtoApp/bin/app.exe	faf4e24606b472e9
+20	67	7724865946417253	CMakeFiles/app.dir/src/canvas_manager.cpp.obj	98a19099970862c0
+17	274	7724865946397254	CMakeFiles/app.dir/src/canvas_navigator.cpp.obj	41907042f3a48ecf
+15	396	7724865946377250	CMakeFiles/app.dir/src/canvas_item.cpp.obj	1e6a615e24f001eb
+13	397	7724865946347244	CMakeFiles/app.dir/src/main.cpp.obj	14e98f170444f506
+22	414	7724865946437258	CMakeFiles/app.dir/src/canvas_renderer.cpp.obj	10c87145b7cb60b
+24	463	7724865946457271	CMakeFiles/app.dir/src/data_manager.cpp.obj	6094961f5b0dd2ee
+463	580	7724865950858376	D:/Projects/CPP/ProtoApp/bin/app.exe	434327acd0014294

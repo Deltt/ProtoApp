@@ -1,7 +1,7 @@
 #include "canvas_renderer.hpp"
+#include "canvas_navigator.hpp"
+#include "data_manager.hpp"
 
-
-//CanvasRenderer::CanvasRenderer() = default;
 CanvasRenderer::CanvasRenderer()
 {
 	int last_screen_width = GetScreenWidth();
@@ -9,15 +9,21 @@ CanvasRenderer::CanvasRenderer()
 	
 	loadFonts();
     canvas_texture = LoadRenderTexture(last_screen_width, last_screen_height);
+	menu_texture = LoadRenderTexture(last_screen_width * 0.125f, last_screen_height);
+	request_canvas_update = true;
 
     BeginTextureMode(canvas_texture);
     ClearBackground(BACKGROUND_COLOR);
     EndTextureMode();
 }
 
-CanvasRenderer::~CanvasRenderer() = default;
+CanvasRenderer::~CanvasRenderer()
+{
+	UnloadRenderTexture(canvas_texture);
+}
 
-CanvasRenderer& CanvasRenderer::getInstance() {
+CanvasRenderer& CanvasRenderer::getInstance()
+{
     static CanvasRenderer instance;
     return instance;
 }
@@ -25,8 +31,13 @@ CanvasRenderer& CanvasRenderer::getInstance() {
 void CanvasRenderer::process()
 {
 	handleWindowResize(last_screen_width, last_screen_height);
-	updateCanvas(CanvasNavigator::getInstance().canvas_camera);
-	drawCanvas();
+
+	if (request_canvas_update) {
+		updateCanvas(CanvasNavigator::getInstance().canvas_camera);
+	}
+	
+	updateMenu();
+	drawPass();
 }
 
 void CanvasRenderer::handleWindowResize(int& last_screen_width, int& last_screen_height)
@@ -45,37 +56,49 @@ void CanvasRenderer::resizeCanvas(int resize_width, int resize_height)
 {
     UnloadRenderTexture(canvas_texture);
     canvas_texture = LoadRenderTexture(resize_width, resize_height);
-    CanvasNavigator::getInstance().request_canvas_update = true;
+    request_canvas_update = true;
 }
 
 void CanvasRenderer::updateCanvas(Camera2D& camera)
 {
-    if (CanvasNavigator::getInstance().request_canvas_update) {
-        BeginTextureMode(canvas_texture);
-        ClearBackground(BACKGROUND_COLOR);
-        
-		// Mode 2D (Camera transformations)
-        BeginMode2D(camera);
+	BeginTextureMode(canvas_texture);
+	ClearBackground(BACKGROUND_COLOR);
+	
+	// Mode 2D (Camera transformations)
+	BeginMode2D(camera);
 
-		drawCanvasItems();
-		DrawRectangle(-10, - 10, 20, 20, (Color){255, 0, 0, 255});
-		
-        EndMode2D();
-        
-        EndTextureMode();
-        CanvasNavigator::getInstance().request_canvas_update = false;
-    }
-
+	drawCanvasItems();
+	DrawRectangle(-10, - 10, 20, 20, (Color){255, 0, 0, 255});
+	
+	EndMode2D();
+	
+	EndTextureMode();
+	
+	request_canvas_update = false;
 	canvas_updates++;
 }
 
-void CanvasRenderer::drawCanvas()
+void CanvasRenderer::updateMenu()
+{
+	BeginTextureMode(menu_texture);
+
+	ClearBackground(BACKGROUND_COLOR);
+	DrawRectangle(0, 0, menu_texture.texture.width, menu_texture.texture.height, (Color){50, 50, 50, 255});
+
+	EndTextureMode();
+}
+
+void CanvasRenderer::drawPass()
 {
     BeginDrawing();
     DrawTextureRec(canvas_texture.texture, 
                    (Rectangle){0, 0, (float)canvas_texture.texture.width, -(float)canvas_texture.texture.height}, 
                    (Vector2){0, 0}, WHITE);
-    
+
+	DrawTextureRec(menu_texture.texture, 
+                   (Rectangle){0, 0, (float)menu_texture.texture.width, -(float)menu_texture.texture.height}, 
+                   (Vector2){0, 0}, WHITE);
+
     // Optional: Draw UI elements that should always update (like cursor, selection handles, etc.)
     // DrawUI();
     
@@ -89,8 +112,8 @@ void CanvasRenderer::loadFonts()
 
 void CanvasRenderer::drawCanvasItems()
 {
-	for(int i = 0; i < canvas_items.size(); i++)
+	for(int i = 0; i < DataManager::getInstance().getCanvasItems().size(); i++)
 	{
-		canvas_items[i].draw();
+		DataManager::getInstance().getCanvasItems()[i].draw();
 	}
 }

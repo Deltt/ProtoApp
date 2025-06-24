@@ -1,7 +1,7 @@
 #include "canvas_item.hpp"
+#include "canvas_navigator.hpp"
+#include "canvas_renderer.hpp"
 #include <cstring>
-
-std::vector<CanvasItem> canvas_items;
 
 CanvasItem::CanvasItem(Rectangle p_bounding_box) : bounding_box(p_bounding_box)
 {

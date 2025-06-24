@@ -89,6 +89,15 @@ build CMakeFiles/app.dir/src/canvas_renderer.cpp.obj: CXX_COMPILER__app_unscanne
   TARGET_COMPILE_PDB = CMakeFiles\app.dir\
   TARGET_PDB = D:\Projects\CPP\ProtoApp\bin\app.pdb
 
+build CMakeFiles/app.dir/src/data_manager.cpp.obj: CXX_COMPILER__app_unscanned_ D$:/Projects/CPP/ProtoApp/src/data_manager.cpp || cmake_object_order_depends_target_app
+  DEP_FILE = CMakeFiles\app.dir\src\data_manager.cpp.obj.d
+  FLAGS = -std=gnu++23
+  INCLUDES = -ID:/Projects/CPP/ProtoApp/libs/raylib/include
+  OBJECT_DIR = CMakeFiles\app.dir
+  OBJECT_FILE_DIR = CMakeFiles\app.dir\src
+  TARGET_COMPILE_PDB = CMakeFiles\app.dir\
+  TARGET_PDB = D:\Projects\CPP\ProtoApp\bin\app.pdb
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target app
@@ -97,7 +106,7 @@ build CMakeFiles/app.dir/src/canvas_renderer.cpp.obj: CXX_COMPILER__app_unscanne
 #############################################
 # Link the executable D:\Projects\CPP\ProtoApp\bin\app.exe
 
-build D$:/Projects/CPP/ProtoApp/bin/app.exe: CXX_EXECUTABLE_LINKER__app_ CMakeFiles/app.dir/src/main.cpp.obj CMakeFiles/app.dir/src/canvas_item.cpp.obj CMakeFiles/app.dir/src/canvas_navigator.cpp.obj CMakeFiles/app.dir/src/canvas_manager.cpp.obj CMakeFiles/app.dir/src/canvas_renderer.cpp.obj
+build D$:/Projects/CPP/ProtoApp/bin/app.exe: CXX_EXECUTABLE_LINKER__app_ CMakeFiles/app.dir/src/main.cpp.obj CMakeFiles/app.dir/src/canvas_item.cpp.obj CMakeFiles/app.dir/src/canvas_navigator.cpp.obj CMakeFiles/app.dir/src/canvas_manager.cpp.obj CMakeFiles/app.dir/src/canvas_renderer.cpp.obj CMakeFiles/app.dir/src/data_manager.cpp.obj
   LINK_LIBRARIES = -lraylib  -lopengl32  -lgdi32  -lwinmm  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   LINK_PATH = -LD:/Projects/CPP/ProtoApp/libs/raylib/lib_desktop
   OBJECT_DIR = CMakeFiles\app.dir

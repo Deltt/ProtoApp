@@ -1,14 +1,9 @@
-#include "raylib.h"
-#include <raymath.h>
-#include <iostream>
-#include <string>
-#include <thread>
-#include <chrono>
+#include "canvas_renderer.hpp"
+#include "canvas_navigator.hpp"
+#include "canvas_item.hpp"
+#include "data_manager.hpp"
 
-#include "globals.hpp"
 
-void initializeApp();
-void initializeData();
 void initializeWindow();
 
 
@@ -16,7 +11,7 @@ void initializeWindow();
 
 int main()
 {
-	initializeApp();
+	initializeWindow();
 
     // Main Loop
     while (!WindowShouldClose())
@@ -24,23 +19,10 @@ int main()
 		CanvasNavigator::getInstance().process();
         CanvasRenderer::getInstance().process();
     }
-
-	UnloadRenderTexture(CanvasRenderer::getInstance().canvas_texture);
+	
     CloseWindow();
 
     return 0;
-}
-
-void initializeApp()
-{
-	initializeData();
-	initializeWindow();
-}
-
-void initializeData()
-{
-	canvas_items.reserve(128);
-	canvas_items.push_back(CanvasItem({0, 0, 400, 200}));
 }
 
 void initializeWindow()

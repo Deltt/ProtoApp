@@ -1,6 +1,8 @@
 #include "canvas_navigator.hpp"
+#include "canvas_renderer.hpp"
+#include "raylib.h"
+#include <raymath.h>
 
-//CanvasNavigator::CanvasNavigator() = default;
 CanvasNavigator::CanvasNavigator()
 {
 	canvas_bounds = {1920, 1080};
@@ -11,7 +13,6 @@ CanvasNavigator::CanvasNavigator()
     canvas_camera.zoom = 1.0f;
 
 	zoom_modifier = 1.0f;
-	request_canvas_update = true;
 }
 
 CanvasNavigator::~CanvasNavigator() = default;
@@ -54,7 +55,7 @@ void CanvasNavigator::zoom()
 
 		zoom_modifier = 1.0f / canvas_camera.zoom;
 
-		request_canvas_update = true;
+		CanvasRenderer::getInstance().request_canvas_update = true;
 
 		if(canvas_camera.zoom == max_zoom) return;
 		if(canvas_camera.zoom == min_zoom) return;
@@ -78,6 +79,6 @@ void CanvasNavigator::pan()
 		canvas_camera.target.x = Clamp(canvas_camera.target.x, -canvas_bounds.x, canvas_bounds.x);
 		canvas_camera.target.y = Clamp(canvas_camera.target.y, -canvas_bounds.y, canvas_bounds.y);
 
-		request_canvas_update = true;
+		CanvasRenderer::getInstance().request_canvas_update = true;
 	}
 }

@@ -79,6 +79,13 @@ build CMakeFiles/index.dir/src/canvas_renderer.cpp.o: CXX_COMPILER__index_unscan
   OBJECT_DIR = CMakeFiles\index.dir
   OBJECT_FILE_DIR = CMakeFiles\index.dir\src
 
+build CMakeFiles/index.dir/src/data_manager.cpp.o: CXX_COMPILER__index_unscanned_ D$:/Projects/CPP/ProtoApp/src/data_manager.cpp || cmake_object_order_depends_target_index
+  DEP_FILE = CMakeFiles\index.dir\src\data_manager.cpp.o.d
+  FLAGS = -std=gnu++23
+  INCLUDES = -ID:/Projects/CPP/ProtoApp/libs/raylib/include
+  OBJECT_DIR = CMakeFiles\index.dir
+  OBJECT_FILE_DIR = CMakeFiles\index.dir\src
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target index
@@ -87,7 +94,7 @@ build CMakeFiles/index.dir/src/canvas_renderer.cpp.o: CXX_COMPILER__index_unscan
 #############################################
 # Link the executable D:\Projects\CPP\ProtoApp\docs\index.html
 
-build D$:/Projects/CPP/ProtoApp/docs/index.html: CXX_EXECUTABLE_LINKER__index_ CMakeFiles/index.dir/src/main.cpp.o CMakeFiles/index.dir/src/canvas_item.cpp.o CMakeFiles/index.dir/src/canvas_navigator.cpp.o CMakeFiles/index.dir/src/canvas_manager.cpp.o CMakeFiles/index.dir/src/canvas_renderer.cpp.o
+build D$:/Projects/CPP/ProtoApp/docs/index.html: CXX_EXECUTABLE_LINKER__index_ CMakeFiles/index.dir/src/main.cpp.o CMakeFiles/index.dir/src/canvas_item.cpp.o CMakeFiles/index.dir/src/canvas_navigator.cpp.o CMakeFiles/index.dir/src/canvas_manager.cpp.o CMakeFiles/index.dir/src/canvas_renderer.cpp.o CMakeFiles/index.dir/src/data_manager.cpp.o
   LINK_FLAGS = -s USE_GLFW=3 -s ASYNCIFY --shell-file D:/Projects/CPP/ProtoApp/emscripten_html_template/centered.html --preload-file ../fonts/
   LINK_LIBRARIES = -lraylib
   LINK_PATH = -LD:/Projects/CPP/ProtoApp/libs/raylib/lib_web
