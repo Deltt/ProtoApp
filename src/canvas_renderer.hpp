@@ -18,17 +18,20 @@ class CanvasRenderer
 		int last_screen_width;
 		int last_screen_height;
 		int canvas_updates {0};
-		Font font[1];
+		int drawn_elements;
+		Font font_pragmatica_10;
+		Font font_pragmatica_20;
 		const Color BACKGROUND_COLOR {200, 200, 200, 255};
 
 		void process();
-		void handleWindowResize(int& last_screen_width, int& last_screen_height);
-		void resizeCanvas(int resize_width, int resize_height);
-		void updateCanvas(Camera2D& camera);
+		void handleWindowResize(int& p_last_screen_width, int& p_last_screen_height);
+		void resizeCanvas(int p_resize_width, int p_resize_height);
+		void updateCanvas(Camera2D& p_camera);
 		void updateMenu();
 		void drawPass();
 		void loadFonts();
-		void drawCanvasItems();
+		void drawCanvasNodes();
+		void drawDebugInfo();
 		
 
 	private:

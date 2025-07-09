@@ -1,6 +1,6 @@
 #include "canvas_renderer.hpp"
 #include "canvas_navigator.hpp"
-#include "canvas_item.hpp"
+#include "canvas_node.hpp"
 #include "data_manager.hpp"
 
 

@@ -11,10 +11,11 @@ if(NOT DEFINED TARGET)
 endif()
 
 # Common source
-set(SRC src/main.cpp src/canvas_item.cpp src/canvas_navigator.cpp src/canvas_manager.cpp src/canvas_renderer.cpp src/data_manager.cpp)
+set(SRC src/main.cpp src/canvas_node.cpp src/canvas_navigator.cpp src/canvas_manager.cpp src/canvas_renderer.cpp src/data_manager.cpp)
 
 # Header include path (shared)
 include_directories(libs/raylib/include)
+include_directories(libs/)
 
 # Platform-specific settings
 if(${TARGET} STREQUAL "desktop")
@@ -34,6 +35,7 @@ elseif(${TARGET} STREQUAL "web")
 
     add_executable(index ${SRC})
     target_link_libraries(index raylib)
+	target_compile_options(index PRIVATE -Wno-deprecated-declarations) # Warning surpression
 
     set_target_properties(index PROPERTIES
         #LINK_FLAGS "-s USE_GLFW=3 -s ASYNCIFY"

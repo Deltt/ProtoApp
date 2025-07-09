@@ -6,6 +6,7 @@ CanvasRenderer::CanvasRenderer()
 {
 	int last_screen_width = GetScreenWidth();
     int last_screen_height = GetScreenHeight();
+	drawn_elements = 0;
 	
 	loadFonts();
     canvas_texture = LoadRenderTexture(last_screen_width, last_screen_height);
@@ -37,38 +38,41 @@ void CanvasRenderer::process()
 	}
 	
 	updateMenu();
+
+	// Actual texture drawing
 	drawPass();
 }
 
-void CanvasRenderer::handleWindowResize(int& last_screen_width, int& last_screen_height)
+void CanvasRenderer::handleWindowResize(int& p_last_screen_width, int& p_last_screen_height)
 {
 	int current_width = GetScreenWidth();
 	int current_height = GetScreenHeight();
-	if (current_width != last_screen_width || current_height != last_screen_height) {
+	if (current_width != p_last_screen_width || current_height != p_last_screen_height)
+	{
 		resizeCanvas(current_width, current_height);
 		CanvasNavigator::getInstance().canvas_camera.offset = (Vector2){ current_width / 2.0f, current_height / 2.0f };
-		last_screen_width = current_width;
-		last_screen_height = current_height;
+		p_last_screen_width = current_width;
+		p_last_screen_height = current_height;
 	}
 }
 
-void CanvasRenderer::resizeCanvas(int resize_width, int resize_height)
+void CanvasRenderer::resizeCanvas(int p_resize_width, int p_resize_height)
 {
     UnloadRenderTexture(canvas_texture);
-    canvas_texture = LoadRenderTexture(resize_width, resize_height);
+    canvas_texture = LoadRenderTexture(p_resize_width, p_resize_height);
     request_canvas_update = true;
 }
 
-void CanvasRenderer::updateCanvas(Camera2D& camera)
+void CanvasRenderer::updateCanvas(Camera2D& p_camera)
 {
 	BeginTextureMode(canvas_texture);
 	ClearBackground(BACKGROUND_COLOR);
 	
 	// Mode 2D (Camera transformations)
-	BeginMode2D(camera);
+	BeginMode2D(p_camera);
 
-	drawCanvasItems();
-	DrawRectangle(-10, - 10, 20, 20, (Color){255, 0, 0, 255});
+	drawCanvasNodes();
+	DrawRectangle(-10, - 10, 20, 20, (Color){255, 0, 0, 255}); // Debug Red Center Rect
 	
 	EndMode2D();
 	
@@ -85,7 +89,16 @@ void CanvasRenderer::updateMenu()
 	ClearBackground(BACKGROUND_COLOR);
 	DrawRectangle(0, 0, menu_texture.texture.width, menu_texture.texture.height, (Color){50, 50, 50, 255});
 
+	drawDebugInfo();
+
 	EndTextureMode();
+}
+
+void CanvasRenderer::drawDebugInfo()
+{
+	char buffer[64];
+	snprintf(buffer, sizeof(buffer), "Debug\nDrawn elements: %d\n", drawn_elements);
+	DrawTextEx(font_pragmatica_20, buffer, {5, 10}, 20, 0, {255, 0, 0, 255});
 }
 
 void CanvasRenderer::drawPass()
@@ -107,13 +120,23 @@ void CanvasRenderer::drawPass()
 
 void CanvasRenderer::loadFonts()
 {
-	font[0] = LoadFontEx("../fonts/Pragmatica.ttf", 10, 0, 95);
+	font_pragmatica_10 = LoadFontEx("../fonts/Pragmatica.ttf", 10, NULL, 0);
+	font_pragmatica_20 = LoadFontEx("../fonts/Pragmatica.ttf", 20, NULL, 0);
 }
 
-void CanvasRenderer::drawCanvasItems()
+void CanvasRenderer::drawCanvasNodes()
 {
-	for(int i = 0; i < DataManager::getInstance().getCanvasItems().size(); i++)
+	Vector2 top_left {GetScreenToWorld2D((Vector2){0, 0}, CanvasNavigator::getInstance().canvas_camera)};
+	Vector2 bottomRight {GetScreenToWorld2D((Vector2){static_cast<float>(last_screen_width), static_cast<float>(last_screen_height)}, CanvasNavigator::getInstance().canvas_camera)};
+	Box query_box{ {top_left.x + menu_texture.texture.width * CanvasNavigator::getInstance().zoom_modifier, top_left.y}, {bottomRight.x, bottomRight.y} };
+	std::vector<Entry> result_s;
+
+	DataManager::getInstance().getTree().query(boost::geometry::index::intersects(query_box), std::back_inserter(result_s));
+	drawn_elements = result_s.size();
+
+	for (const auto& v : result_s)
 	{
-		DataManager::getInstance().getCanvasItems()[i].draw();
+    	size_t object_index = v.second;
+		DataManager::getInstance().getCanvasNodes()[object_index].value().draw();
 	}
 }
